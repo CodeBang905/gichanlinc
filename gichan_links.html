@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>기찬육수 — 공식 링크</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    background: #111008;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* 배경 질감 */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(200,55,45,0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 80% 80%, rgba(184,134,11,0.1) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* 배경 패턴 */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 40px,
+      rgba(255,255,255,0.012) 40px,
+      rgba(255,255,255,0.012) 41px
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .card {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 420px;
+    border-radius: 28px;
+    overflow: hidden;
+    background: rgba(20,14,6,0.85);
+    border: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(20px);
+    box-shadow:
+      0 0 0 1px rgba(200,55,45,0.15),
+      0 32px 80px rgba(0,0,0,0.7);
+  }
+
+  /* 상단 사진 영역 */
+  .hero-area {
+    position: relative;
+    width: 100%;
+    height: 320px;
+    overflow: hidden;
+    background: 
+      radial-gradient(ellipse 120% 80% at 50% 110%, #3D1A06 0%, transparent 70%),
+      radial-gradient(ellipse 80% 60% at 20% 20%, rgba(180,80,20,0.4) 0%, transparent 55%),
+      radial-gradient(ellipse 80% 60% at 80% 10%, rgba(140,50,10,0.3) 0%, transparent 55%),
+      linear-gradient(160deg, #2A0E04 0%, #1C0A03 35%, #0F0602 70%, #1A0A04 100%);
+  }
+
+  /* ★ 여기에 실제 사진을 넣으세요
+     <img src="대표사진.jpg" style="width:100%;height:100%;object-fit:cover;object-position:top;"> */
+  .hero-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+
+  .hero-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(160deg, #2a1208 0%, #1a0f08 40%, #0d0806 100%);
+    gap: 12px;
+  }
+
+  .hero-placeholder-logo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 2px solid rgba(200,55,45,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: rgba(200,55,45,0.08);
+  }
+
+  .hero-placeholder-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 12px;
+  }
+
+  .hero-placeholder-text {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 0.04em;
+  }
+
+  /* 사진 위 그라디언트 오버레이 */
+  .hero-overlay {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 220px;
+    background: linear-gradient(to top, rgba(20,14,6,1) 0%, rgba(15,6,2,0.85) 40%, rgba(10,4,1,0.3) 75%, transparent 100%);
+  }
+
+  /* 사진 위 텍스트 */
+  .hero-text {
+    position: absolute;
+    bottom: 28px;
+    left: 0; right: 0;
+    text-align: center;
+    padding: 0 24px;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: #FFD080;
+    background: rgba(200,55,45,0.25);
+    border: 1px solid rgba(200,55,45,0.5);
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+
+  .hero-name {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 26px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.01em;
+    margin-bottom: 6px;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.6);
+  }
+
+  .hero-tagline {
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  /* 본문 영역 */
+  .body-area {
+    padding: 28px 24px 36px;
+  }
+
+  /* 한줄 소개 */
+  .intro-text {
+    font-size: 13px;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.8;
+    text-align: center;
+    margin-bottom: 28px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+
+  .intro-text strong {
+    color: rgba(255,255,255,0.75);
+    font-weight: 500;
+  }
+
+  /* 링크 버튼들 */
+  .links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .link-btn {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+    border-radius: 14px;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.04);
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .link-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+
+  .link-btn:hover {
+    transform: translateY(-2px) scale(1.01);
+    border-color: rgba(255,255,255,0.16);
+    background: rgba(255,255,255,0.07);
+  }
+
+  .link-btn:hover::before { opacity: 1; }
+
+  .link-btn:active {
+    transform: scale(0.98);
+  }
+
+  /* 홈페이지 버튼 — 메인 강조 */
+  .link-btn.primary {
+    background: linear-gradient(135deg, rgba(200,55,45,0.3) 0%, rgba(155,31,23,0.2) 100%);
+    border-color: rgba(200,55,45,0.4);
+  }
+
+  .link-btn.primary:hover {
+    background: linear-gradient(135deg, rgba(200,55,45,0.45) 0%, rgba(155,31,23,0.35) 100%);
+    border-color: rgba(200,55,45,0.6);
+    box-shadow: 0 8px 24px rgba(200,55,45,0.2);
+  }
+
+  .link-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 20px;
+  }
+
+  .icon-home  { background: rgba(200,55,45,0.2); }
+  .icon-naver { background: rgba(3,199,90,0.15); }
+  .icon-kakao { background: rgba(254,229,0,0.15); }
+  .icon-insta { background: rgba(225,48,108,0.15); }
+
+  /* 네이버 N 아이콘 */
+  .naver-n {
+    font-size: 18px;
+    font-weight: 900;
+    color: #03C75A;
+    font-family: 'Noto Sans KR', sans-serif;
+    letter-spacing: -0.05em;
+  }
+
+  /* 카카오 말풍선 */
+  .kakao-icon {
+    width: 22px;
+    height: 20px;
+    background: #FEE500;
+    border-radius: 50% 50% 50% 8px;
+    position: relative;
+  }
+
+  .kakao-icon::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 6px;
+    width: 8px;
+    height: 8px;
+    background: #FEE500;
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+  }
+
+  /* 인스타 그라디언트 원 */
+  .insta-circle {
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .insta-inner {
+    width: 14px;
+    height: 14px;
+    border: 2px solid white;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .insta-dot {
+    width: 4px;
+    height: 4px;
+    background: white;
+    border-radius: 50%;
+  }
+
+  .link-content { flex: 1; }
+
+  .link-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 2px;
+    letter-spacing: -0.01em;
+  }
+
+  .link-sub {
+    font-size: 11px;
+    color: rgba(255,255,255,0.35);
+    font-weight: 300;
+  }
+
+  .link-arrow {
+    color: rgba(255,255,255,0.2);
+    font-size: 14px;
+    transition: transform 0.2s, color 0.2s;
+  }
+
+  .link-btn:hover .link-arrow {
+    transform: translateX(3px);
+    color: rgba(255,255,255,0.5);
+  }
+
+  /* 구분선 */
+  .divider-line {
+    height: 1px;
+    background: rgba(255,255,255,0.06);
+    margin: 20px 0;
+  }
+
+  /* 연락처 */
+  .contact-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 24px;
+  }
+
+  .contact-phone {
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.04em;
+  }
+
+  .contact-dot {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+  }
+
+  .sample-pill {
+    font-size: 11px;
+    font-weight: 700;
+    color: #C8372D;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    border: 1px solid rgba(200,55,45,0.35);
+    padding: 3px 10px;
+    border-radius: 20px;
+    transition: all 0.2s;
+  }
+
+  .sample-pill:hover {
+    background: rgba(200,55,45,0.15);
+    border-color: rgba(200,55,45,0.6);
+  }
+
+  /* 입장 애니메이션 */
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes floatLogo {
+    0%   { transform: translateY(0px); }
+    50%  { transform: translateY(-8px); }
+    100% { transform: translateY(0px); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  .card { animation: slideUp 0.7s cubic-bezier(0.34, 1.2, 0.64, 1) both; }
+  .link-btn:nth-child(1) { animation: slideUp 0.6s 0.3s both; }
+  .link-btn:nth-child(2) { animation: slideUp 0.6s 0.4s both; }
+  .link-btn:nth-child(3) { animation: slideUp 0.6s 0.5s both; }
+  .link-btn:nth-child(4) { animation: slideUp 0.6s 0.6s both; }
+
+  /* 모바일 최적화 */
+  @media (max-width: 480px) {
+    body { padding: 20px 12px; }
+    .hero-area { height: 280px; }
+    .card { border-radius: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+
+  <!-- 히어로 사진 영역 -->
+  <div class="hero-area">
+
+    <!--
+      ★ 사진 교체 방법:
+      아래 hero-placeholder div 전체를 지우고,
+      <img src="브랜드사진.jpg" class="hero-photo" alt="기찬육수">
+      한 줄로 교체하세요.
+    -->
+    <img src="data:image/jpeg;base64,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" class="hero-photo" alt="기찬육수 로고" style="object-fit:contain; background:transparent; padding:28px; width:100%; height:100%; filter: drop-shadow(0 8px 32px rgba(200,80,20,0.35)) drop-shadow(0 2px 8px rgba(0,0,0,0.6)); animation: floatLogo 4s ease-in-out infinite;">
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-text">
+      <span class="hero-badge">요식업 전문 소스·육수</span>
+      <h1 class="hero-name">기찬육수</h1>
+      <p class="hero-tagline">안녕하세요.<br>국내 최고 자연육수업체 기찬육수입니다.</p>
+    </div>
+  </div>
+
+  <!-- 본문 -->
+  <div class="body-area">
+
+    <p class="intro-text">
+      요식업 <strong style="color:#FF8C42;font-weight:800;">9년차</strong>, 프랜차이즈 <strong style="color:#FF8C42;font-weight:800;">매장 6개</strong>를 직접 운영한 CEO가<br>
+      손수 개발한 <strong style="color:#FFD166;font-weight:800;">소스·육수 전문 브랜드</strong>.<br><br>
+      <strong style="color:#ffffff;font-weight:800;">프랜차이즈 본사 및 전국 1,500개 이상 매장</strong>이<br>
+      선택한 검증된 맛 — 지금 바로 경험해보세요.
+    </p>
+
+    <div class="links">
+
+      <!-- 홈페이지 (메인 강조) -->
+      <a href="gichan_yusu.html" class="link-btn primary">
+        <!--
+          ★ 홈페이지 주소 교체:
+          href="https://여러분의주소.netlify.app"
+        -->
+        <div class="link-icon icon-home">🏠</div>
+        <div class="link-content">
+          <p class="link-label">기찬육수 공식 홈페이지</p>
+          <p class="link-sub">제품 소개 · 브랜드 스토리 · 샘플 신청</p>
+        </div>
+        <span class="link-arrow">›</span>
+      </a>
+
+      <!-- 네이버 카페 -->
+      <a href="https://cafe.naver.com/ggomggomfood" class="link-btn" target="_blank" rel="noopener">
+        <!--
+          ★ 네이버 카페 주소 교체:
+          href="https://cafe.naver.com/실제카페주소"
+        -->
+        <div class="link-icon icon-naver">
+          <span class="naver-n">N</span>
+        </div>
+        <div class="link-content">
+          <p class="link-label">네이버 카페 꼼꼼푸드</p>
+          <p class="link-sub">레시피 · 후기 · 커뮤니티</p>
+        </div>
+        <span class="link-arrow">›</span>
+      </a>
+
+      <!-- 카카오톡 채널 -->
+      <a href="https://pf.kakao.com/_wxfwlG" class="link-btn" target="_blank" rel="noopener">
+        <!--
+          ★ 카카오 채널 주소 교체:
+          href="https://pf.kakao.com/_실제채널ID"
+          카카오채널 없으면: href="https://open.kakao.com/실제오픈채팅주소"
+        -->
+        <div class="link-icon icon-kakao">
+          <div class="kakao-icon"></div>
+        </div>
+        <div class="link-content">
+          <p class="link-label">카카오톡 채널</p>
+          <p class="link-sub">1:1 문의 · 샘플 신청 · 주문</p>
+        </div>
+        <span class="link-arrow">›</span>
+      </a>
+
+      <!-- 인스타그램 -->
+      <a href="https://www.instagram.com/kichan_yuksu?igsh=cGVtcXB5YjZrdXN4" class="link-btn" target="_blank" rel="noopener">
+        <!--
+          ★ 인스타 주소 교체:
+          href="https://instagram.com/실제계정명"
+        -->
+        <div class="link-icon icon-insta">
+          <div class="insta-circle">
+            <div class="insta-inner">
+              <div class="insta-dot"></div>
+            </div>
+          </div>
+        </div>
+        <div class="link-content">
+          <p class="link-label">인스타그램</p>
+          <p class="link-sub">신제품 소식 · 요식업 꿀팁</p>
+        </div>
+        <span class="link-arrow">›</span>
+      </a>
+
+      <!-- 스마트스토어 -->
+      <a href="https://smartstore.naver.com/ggomggomfood" class="link-btn" target="_blank" rel="noopener">
+        <div class="link-icon icon-naver">
+          <span class="naver-n">N</span>
+        </div>
+        <div class="link-content">
+          <p class="link-label">네이버 스마트스토어</p>
+          <p class="link-sub">온라인 주문 · 제품 구매</p>
+        </div>
+        <span class="link-arrow">›</span>
+      </a>
+
+    </div>
+
+    <div class="divider-line"></div>
+
+    <!-- 연락처 -->
+    <div class="contact-row">
+      <span class="contact-phone">📞 010-6424-5466</span>
+      <div class="contact-dot"></div>
+      <a href="tel:010-6424-5466" class="sample-pill">무료 샘플 신청</a>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
